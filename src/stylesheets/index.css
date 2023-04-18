@@ -1,11 +1,12 @@
 .App {
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 50px 1fr 1fr;
   grid-template-columns: 1fr 1fr;
   gap: 10px 10px;
   place-items: center;
   place-content: stretch;
 
+  position: relative;
   height: 100%;
   width: 100%;
   margin: 0;
@@ -14,12 +15,52 @@
 }
 
 #problem-display {
-  grid-column: 1 / 1;
-  grid-row: 1 / 1;
+  grid-column: 1 / 2;
+  grid-row: 2 / 2;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: beige;
   padding: 10px;
+}
+
+nav {
+  grid-column: 1 / span 2;
+  grid-row: 1 / 1;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-color: lightgrey;
+}
+
+ul {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  list-style: none;
+  margin: 0 30px 0 30px;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+img {
+  height: 30px;
+  width: 30px;
 }
