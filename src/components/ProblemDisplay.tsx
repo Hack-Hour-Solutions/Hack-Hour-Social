@@ -10,12 +10,12 @@ const ProblemDisplay: FC<ProblemProps> = ({ title, url, difficulty }): ReactElem
   <div id='problem-display'>
     <h3>Today's Hack Hour</h3>
     <p>
-      <strong>Title: </strong>
+      <strong>Title:</strong>
       {title}
     </p>
     <p>
       <strong>Link: </strong>
-      {url}
+      <a href={url}>{url}</a>
     </p>
     <p>
       <strong>Difficulty: </strong>
