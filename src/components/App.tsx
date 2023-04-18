@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import React from "react";
+import ProblemDisplay from "./ProblemDisplay";
 
 function App() {
   return (
     <div className="App">
-      <h1>App</h1>
+      <ProblemDisplay title='title' url='link' difficulty='difficulty'/>
     </div>
   )
 }
