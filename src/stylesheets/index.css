@@ -23,3 +23,9 @@
   background-color: beige;
   padding: 10px;
 }
+
+.alert-bar {
+  background-color: rgb(222, 110, 110);
+  color:rgb(99, 4, 4);
+  text-align: center;
+}

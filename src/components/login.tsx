@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import jwt_decode from 'jwt-decode';
+import Alert from './Alert';
 
 interface decodedJWT {
   aud: string,
@@ -51,6 +52,11 @@ const Login = (props: any) => {
 
   return (
     <div className="login-container">
+      {
+        loginFailed && 
+        <Alert message="Could not sign you in. Please try again." />
+      }
+      <p>Sign in</p>
       <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID}>
         <GoogleLogin
           onSuccess={loginSuccess}
