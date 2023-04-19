@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import AlgoBoard from "./AlgoBoard";
-import Login from './Login';
+import Login from "./Login"
 import { userState } from "../types";
 
 function App() {
