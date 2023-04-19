@@ -34,8 +34,9 @@ app.use(
 
 // req.session.destroy to get rid of the session when they log out
 
-app.post('/api/solution', postController.postSolution, (req: Request, res: Response) => {
-  res.status(200).json(res.locals.post)
+app.post('/api/solution', 
+postController.postSolution, 
+(req: Request, res: Response) => {res.status(200).json(res.locals.post)
 })
 
 app.use('/api', (req: Request, res: Response) =>
