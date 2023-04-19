@@ -1,16 +1,18 @@
-import express, { Request, Response, NextFunction } from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv'
+import express, { Request, Response, NextFunction } from "express";
+import cors from "cors";
+import dotenv from "dotenv";
 
 dotenv.config();
 
 const PORT = 5000;
 const app = express();
 
-app.use(express.json())
+app.use(express.json());
 app.use(cors());
 
-app.use('/api', (req: Request, res: Response) => res.status(200).json('here at api'));
+app.use("/api", (req: Request, res: Response) =>
+  res.status(200).json("here at api")
+);
 
 // default route handler
 app.use((req: Request, res: Response) => res.sendStatus(404));
