@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from '@jest/globals';
-import { createErr } from '../controllers.ts';
+import { createErr } from '../utils';
 
 describe('createErr helper', () => {
   const testCreateErrorInput = {

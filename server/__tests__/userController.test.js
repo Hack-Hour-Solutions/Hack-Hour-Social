@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from '@jest/globals';
-import { userController } from '../controllers.ts';
+import { userController } from '../controllers/userController';
 
 describe('userController', () => {
   describe('authenticateToken', () => {

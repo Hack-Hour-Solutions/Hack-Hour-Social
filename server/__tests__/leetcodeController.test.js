@@ -3,7 +3,10 @@
  */
 
 import { describe, expect, it } from '@jest/globals';
-import { createErr, leetcodeController } from '../controllers.ts';
+import {
+  createErr,
+  leetcodeController,
+} from '../controllers/leetcodeController';
 import axios from 'axios';
 
 jest.mock('axios');
