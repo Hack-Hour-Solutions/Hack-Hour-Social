@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { dbController } from "./controllers.js";
+import { postController } from "./controllers/postController.js";
 
 dotenv.config();
 
@@ -11,8 +11,12 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.get('/api/feed', dbController.getSolutions, (req: Request, res: Response) => {
+app.get('/api/feed', postController.getSolutions, (req: Request, res: Response) => {
   res.status(200).json(res.locals.solutions)
+})
+
+app.post('/api/solution', postController.postSolution, (req: Request, res: Response) => {
+  res.status(200).json(res.locals.post)
 })
 
 app.use("/api", (req: Request, res: Response) =>
