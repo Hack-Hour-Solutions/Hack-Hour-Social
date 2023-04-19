@@ -9,22 +9,42 @@ import Submit from '../src/components/Submit';
 
 jest.mock('axios');
 
+const mockedOnChange = jest.fn();
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  onChange: () => mockedOnChange,
+}));
+const mockedSubmit = jest.fn();
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  handleSubmit: () => mockedSubmit,
+}));
+
 describe('Unit testing for submit component', () => {
   describe('Text area is controlled input', () => {
-    beforeAll(() => {
-      submit = render(
+    let submit;
+    beforeEach(async () => {
+      submit = await render(
         <Submit />
       );
     });
-    it('should update state when changed', () => {
-      userEvent.type(scree.getByRole('textarea'), 'test input');
-      expect(screen.getByTestId('output')).toHaveTextContent('test input');
-      expect(scree.getByRole('textarea')).toHaveValue('test input');
+    it('should initialize with empty string', () => {
+      expect(submit.getByRole('textbox')).toHaveValue('');
+    })
+    it('should update state when changed', async () => {
+      const input = await submit.getByRole('textbox');
+      userEvent.type(input, 'test input');
+      expect(mockedOnChange).toHaveBeenCalledWith('test input');
+      expect(input).toHaveValue('test input');
     });
   });
 
   describe('Button sends correct information', () => {
-
+    beforeAll(async () => {
+      await render(
+        <Submit />
+      );
+    });
     it('should fire an event on click', () => {
 
     });
