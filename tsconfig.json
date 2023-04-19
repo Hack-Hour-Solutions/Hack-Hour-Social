@@ -17,7 +17,7 @@
     "watch": true,
     "jsx": "react-jsx"
   },
-  "include": ["/**/*.ts"],
+  "include": ["/**/*.ts", "server/__tests__/database.test.js", "server/jest2.config.js"],
   "exclude": ["node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }],
   "ts-node": {

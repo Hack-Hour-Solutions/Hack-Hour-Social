@@ -10,7 +10,6 @@ const app = express();
 app.use(express.json())
 app.use(cors());
 
-
 app.use('/api', (req: Request, res: Response) => res.status(200).json('here at api'));
 
 // default route handler
