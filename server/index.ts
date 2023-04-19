@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { dbController } from './controllers.js';
+import { postController } from './controllers/postController.js';
 import { userController } from './controllers/userController.js';
 
 dotenv.config();
@@ -15,7 +15,7 @@ app.use(cors());
 // Routes
 app.get(
   '/api/feed',
-  dbController.getSolutions,
+  postController.getSolutions,
   (req: Request, res: Response) => {
     res.status(200).json(res.locals.solutions);
   }
@@ -33,6 +33,11 @@ app.use(
 );
 
 // req.session.destroy to get rid of the session when they log out
+
+app.post('/api/solution', 
+postController.postSolution, 
+(req: Request, res: Response) => {res.status(200).json(res.locals.post)
+})
 
 app.use('/api', (req: Request, res: Response) =>
   res.status(200).json('here at api')
