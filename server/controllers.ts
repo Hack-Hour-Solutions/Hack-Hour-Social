@@ -106,4 +106,16 @@ export const userController = {
       }
     );
   },
+  getUserData: (req: Request, res: Response, next: NextFunction) => {
+    try {
+    } catch (err) {
+      return next(
+        createErr({
+          method: 'getUserData',
+          type: 'getUserData error',
+          err,
+        })
+      );
+    }
+  },
 };
