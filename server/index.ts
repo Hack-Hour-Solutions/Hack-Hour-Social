@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import { dbController } from "./controllers.js";
 
 dotenv.config();
 
@@ -10,12 +11,17 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.get('/api/feed', dbController.getSolutions, (req: Request, res: Response) => {
+  res.status(200).json(res.locals.solutions)
+})
+
 app.use("/api", (req: Request, res: Response) =>
   res.status(200).json("here at api")
 );
 
 // default route handler
 app.use((req: Request, res: Response) => res.sendStatus(404));
+
 
 interface defaultError {
   log: string;
