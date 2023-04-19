@@ -20,6 +20,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: beige;
+  justify-content: center;
+  border: 1px solid gray;
   padding: 10px;
+  
+  height: 250px;
+  width: 250px;
+}
+
+.alert-bar {
+  background-color: rgb(222, 110, 110);
+  color:rgb(99, 4, 4);
+  text-align: center;
 }
