@@ -13,8 +13,9 @@ export const dbController: controllerType = {
     // REWORK TO BE TO PST TIME INSTEAD OF UTC
     Post.find({date: {$gte: todayMidnight}})
       .then(response => {
-        console.log('POST.find RESPONSE', response)
+        //console.log('POST.find RESPONSE', response)
         res.locals.solutions = response;
+        console.log('RES.LOCALS.SOLUTIONS', res.locals.solutions)
         return next();
       })
       .catch(err => console.log(err))

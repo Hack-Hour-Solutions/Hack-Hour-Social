@@ -14,13 +14,10 @@ let next = jest.fn();
 const mockData = {
   comments: [],
   _id: '643f5625690730999c94a3fb',
-  solution: 'hello this sucks',
-  date: '2023-04-19T02:32:56.261Z'
+  solution: 'test-solution',
+  date: '2023-04-19T02:32:56.261Z',
+  user_id: '643f5625690730999c94a3fb'
 }
-
-
-
-
 
 describe('post.controller connects to database and retrieves posts', () => {
   
@@ -34,13 +31,12 @@ describe('post.controller connects to database and retrieves posts', () => {
     expect(data.solution).toBe('test-solution')
   })
   
-  
-  it ('controller.getSolutions retrieves solutions', () => {
+  it ('controller.getSolutions adds posts to the res.locals object', async () => {
     jest.spyOn(Post, 'find')
       .mockImplementationOnce(() => Promise.resolve([mockData]))
-    dbController.getSolutions(req, res, next);
+    await dbController.getSolutions(req, res, next);
     expect(res.locals.solutions[0].solution).toBe('test-solution');
-    expect(res.locals.solutions[0].date).toBe('2023-04-18T23:57:10.118Z')
-    expect(res.locals.solutions[0].user_id).toBe('testID');
+    expect(res.locals.solutions[0].date).toBe('2023-04-19T02:32:56.261Z')
+    expect(res.locals.solutions[0].user_id).toBe('643f5625690730999c94a3fb');
   })
 })
