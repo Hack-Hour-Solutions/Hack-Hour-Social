@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import AlgoBoard from "./AlgoBoard";
-import Login from './login'
+import Login from "./login";
 import { userState } from "../types";
 
 function App() {
@@ -18,7 +18,6 @@ function App() {
         const user = await axios.get('/api/session');
           // if the user is logged in, set the user 
           // and navitage directly to the app
-          console.log(user);
           if (user.data?.loggedIn === true) {
             setUser({
               name: user.data.name,
@@ -26,11 +25,9 @@ function App() {
               picture: user.data.picture,
               id: user.data.id
             });
-            console.log('should nav to app');
             navigate('app');
           }
           else {
-            console.log('should nav to login')
             navigate('login')
           }
       } catch (e: unknown) {

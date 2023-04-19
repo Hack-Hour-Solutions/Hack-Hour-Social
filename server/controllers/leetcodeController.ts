@@ -48,15 +48,16 @@ export const leetcodeController = {
       res.locals.dailyProblem = { title, difficulty, link };
       // console.log(res.locals.dailyProblem);
       return next();
-    } catch (err) {
-      console.log('inside error');
-      return next(
-        createErr({
-          method: 'getProblemOfTheDay',
-          type: 'leetcode problem error',
-          err,
-        })
-      );
+        } catch (err : unknown) {
+      if (err instanceof Error) {
+        return next(
+          createErr({
+            method: 'getProblemOfTheDay',
+            type: 'getProblemOfTheDay error',
+            err,
+          })
+        );
+      }
     }
   },
 };

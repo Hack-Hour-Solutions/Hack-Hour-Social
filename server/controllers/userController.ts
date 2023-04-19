@@ -1,33 +1,49 @@
 import { Request, Response, NextFunction } from 'express';
 import { createErr } from '../utils.js';
-import jwt from 'jsonwebtoken';
-import { User } from '../models.js';
+import { OAuth2Client } from 'google-auth-library';
+
+const client = new OAuth2Client(process.env.VITE_GOOGLE_OAUTH_CLIENT_ID);
 
 export const userController = {
-  authenticateToken: (req: Request, res: Response, next: NextFunction) => {
-    const authHeader = req.get('authorization');
-    const token = authHeader && authHeader.split(' ')[1];
-
-    if (!token)
+  authenticateToken: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const authHeader = req.headers.authorization;
+      
+      // tsc type checking
+      if(!authHeader) throw new Error('authHeader missing');
+      if(typeof authHeader !== 'string') throw new Error('authheader is not a string');
+      
+      // Bearer at 0 JWT at 1
+      const token = authHeader.split(' ')[1];
+      
+      if (!token)
       return res
-        .status(401)
-        .json({ error: "Missing JWT token from the 'Authorization' header" });
+      .status(401)
+      .json({ error: "Missing JWT token from the 'Authorization' header" });
+      
+      // google verification through client id https://developers.google.com/identity/sign-in/web/backend-auth
+      const ticket = await client.verifyIdToken({
+        idToken: token,
+        audience: process.env.VITE_GOOGLE_OAUTH_CLIENT_ID,
+      });
+      const payload = ticket.getPayload();
 
-    jwt.verify(
-      token,
-      process.env.TOKEN_SECRET as string,
-      (err: any, user: any) => {
-        if (err)
-          return next(
-            createErr({
-              method: 'authenticateToken',
-              type: 'authenticateToken error',
-              err,
-            })
-          );
-        console.log(user);
-        res.locals.user = user;
-        return next();
+      if(!payload) throw new Error('payload of JWT is empty');
+
+      console.log(`payload is : inside of authenticateToken`, payload);
+
+      res.locals.users = payload;
+      return next();
+
+    } catch (err : unknown) {
+      if (err instanceof Error) {
+        return next(
+          createErr({
+            method: 'authenticateToken',
+            type: 'authenticateToken error',
+            err,
+          })
+        );
       }
     );
   },
