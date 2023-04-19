@@ -1,9 +1,9 @@
-import { describe, expect, it } from '@jest/globals';
-import { userController } from '../controllers.ts';
-
 /**
  * @jest-environment node
  */
+
+import { describe, expect, it } from '@jest/globals';
+import { userController } from '../controllers.ts';
 
 describe('userController', () => {
   describe('authenticateToken', () => {
