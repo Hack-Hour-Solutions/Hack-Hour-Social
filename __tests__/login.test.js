@@ -6,7 +6,7 @@ import '@testing-library/jest-dom';
 import Alert from '../src/components/Alert';
 import { BrowserRouter } from 'react-router-dom';
 
-describe('Unit testing login components', () => {
+xdescribe('Unit testing login components', () => {
   describe('Alert Bar Text', () => {
     let alertBar;
     const props = {

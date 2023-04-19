@@ -22,7 +22,6 @@ const mockFeed = {
 const mockPost = {
   user_id: '643f5625690730999c94a3fb',
   solution: 'test-solution-post',
-  date: '2023-04-19T02:32:56.261Z',
 }
 
 describe('postController', () => {
@@ -52,18 +51,21 @@ describe('postController', () => {
       expect(res.locals.solutions[0].solution).toBe('test-solution');
       expect(res.locals.solutions[0].date).toBe('2023-04-19T02:32:56.261Z')
       expect(res.locals.solutions[0].user_id).toBe('643f5625690730999c94a3fb');
+      expect(next).toBeCalledTimes(1);
     })
   })
 
   describe('postSolution', () => {
-    it ('Adds good post to mock database and returns nothing', async () => {
-      const spy = jest.spyOn(Post, create).mockImplementation(() => Promise.resolve())
+    it ('Adds good post to mock database', async () => {
+      const spy = jest.spyOn(Post, 'create').mockImplementation(() => Promise.resolve())
       req.body = mockPost;
 
-      await postController.postSolution(req, res, next)
+      await postController.postSolution(req, res, next);
 
-      expect(spy.mock.calls[0][0]).toBe({user_id: '643f5625690730999c94a3fb'})
-
+      expect(spy.mock.calls[0][0].solution).toBe(mockPost.solution);
+      expect(spy.mock.calls[0][0].user_id).toBe(mockPost.user_id);
+      expect(spy.mock.calls[0][0]).toHaveProperty('date');
+      expect(next).toBeCalledTimes(1);
     })
 
   })

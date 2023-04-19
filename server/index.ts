@@ -6,7 +6,7 @@ import { userController } from './controllers/userController.js';
 
 dotenv.config();
 
-const PORT = 5000;
+const PORT = 8080;
 const app = express();
 
 app.use(express.json());
@@ -24,7 +24,7 @@ app.get(
 app.use(
   '/api/login',
   userController.authenticateToken,
-  userController.getUserData, // get GOOGLE user data: res.locals.user
+  //userController.getUserID, // get GOOGLE user data: res.locals.user
   // getUserID: middleware
   // upsert using email: (if not present add to db)
   // attach id to res.locals.user.id

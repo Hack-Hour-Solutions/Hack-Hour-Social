@@ -4,25 +4,29 @@
 
 import { describe, expect, it } from '@jest/globals';
 import { userController } from '../controllers/userController';
+import { User } from '../models';
 
 describe('userController', () => {
+  const mockRequest = (authHeader, sessionData) => ({
+    get(name) {
+      if (name === 'authorization') return authHeader;
+      return null;
+    },
+    session: { data: sessionData },
+  });
+
+  const mockResponse = (locals) => {
+    const res = {};
+    res.status = jest.fn().mockReturnValue(res);
+    res.json = jest.fn().mockReturnValue(res);
+    res.locals = locals;
+    return res;
+  };
+
+  const mockNext = jest.fn();
+
   describe('authenticateToken', () => {
-    const mockRequest = (authHeader, sessionData) => ({
-      get(name) {
-        if (name === 'authorization') return authHeader;
-        return null;
-      },
-      session: { data: sessionData },
-    });
 
-    const mockResponse = () => {
-      const res = {};
-      res.status = jest.fn().mockReturnValue(res);
-      res.json = jest.fn().mockReturnValue(res);
-      return res;
-    };
-
-    const mockNext = jest.fn();
 
     const expectedResponse = {
       error: "Missing JWT token from the 'Authorization' header",
@@ -45,7 +49,28 @@ describe('userController', () => {
   });
 
   describe('getUserData', () => {
-    it.todo('should return name, picture, email');
+    const mockUser = {
+      name: 'Bob',
+      email: 'bob@email.com',
+      picture: 'picURL'
+    }
+
+    const mockUserWithID = Object.assign({_id: 'testID'}, mockUser)
+
+    afterEach(() => {
+      jest.resetAllMocks()
+    })
+
+    it('should return name, picture, email, and new id', async () => {
+      const res = mockResponse({user: mockUser});
+      const req = mockRequest();
+      const spy = jest.spyOn(User, 'findOneAndUpdate')
+        .mockImplementation(() => Promise.resolve(mockUserWithID))
+
+      await userController.getUserID(req, res, mockNext)
+
+      expect(res.locals.user).toBe(mockUserWithID)
+    });
   });
 
   // describe verifyData: name, picture, email middleware
