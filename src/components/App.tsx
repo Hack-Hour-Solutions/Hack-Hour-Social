@@ -60,7 +60,12 @@ function App() {
       />
       <Route
         path='/app'
-        element={<AlgoBoard />}
+        element={
+          <AlgoBoard
+            user={user}
+            setUser={setUser}
+          />
+        }
       />
     </Routes>
     </>

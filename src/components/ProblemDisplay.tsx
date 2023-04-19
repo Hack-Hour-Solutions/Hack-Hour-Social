@@ -3,19 +3,19 @@ import axios, { AxiosResponse } from "axios";
 
 const ProblemDisplay: FC<{}> = (): ReactElement => {
   let title: string = '';
-  let url: string = '';
+  let link: string = '';
   let difficulty: string = '';
 
-  // (async (): Promise<void> => {
-  //   try {
-  //     const response: AxiosResponse = await axios.get('/api/problem');
-  //     title = response.data.title;
-  //     url = response.data.url;
-  //     difficulty = response.data.difficulty;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // })();
+  (async (): Promise<void> => {
+    try {
+      const response: AxiosResponse = await axios.get('/api/problem');
+      title = response.data.title;
+      link = response.data.link;
+      difficulty = response.data.difficulty;
+    } catch (error) {
+      console.log(error);
+    }
+  })();
 
   return (
     <div id='problem-display'>
@@ -26,7 +26,7 @@ const ProblemDisplay: FC<{}> = (): ReactElement => {
     </p>
     <p>
       <strong>Link: </strong>
-      <a href={url} target="_blank" rel="noopener noreferrer">Go to Leetcode</a>
+      <a href={link} target="_blank" rel="noopener noreferrer">Go to Leetcode</a>
     </p>
     <p>
       <strong>Difficulty: </strong>
