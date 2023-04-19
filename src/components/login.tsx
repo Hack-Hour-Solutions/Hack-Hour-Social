@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import jwt_decode from 'jwt-decode';
+import axios from 'axios';
 import Alert from './Alert';
 
 interface decodedJWT {
@@ -27,22 +28,20 @@ const Login = (props: any) => {
   const [loginFailed, setLoginFailed] = useState<boolean>(false);
 
   const loginSuccess = async (response: any) => {
-    console.log('response from success is: ', response);
-    // Decode JWT sent from google oauth api
-    const userDetails: decodedJWT = jwt_decode(response.credential);
-    console.log('decoded JWT is: ', userDetails);
-    // destructure desired user info
-    const { name, email, picture } = userDetails;
+    // console.log('response from success is: ', response);
+    // // Decode JWT sent from google oauth api
+    // const userDetails: decodedJWT = jwt_decode(response.credential);
+    // console.log('decoded JWT is: ', userDetails);
+    // // destructure desired user info
+    // const { name, email, picture } = userDetails;
     try {
-      const serverResponse = await fetch('/api', {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, email, picture })
-      });
+      // TODO - Adjust for correct backend communication
+      const loginResponse = await axios.post('api/login', {
+        headers: {"Authorization" : `Bearer ${response.credential}`}
+      })
+      const { name, email, picture, id } = loginResponse.data;
       if (response.status === 200){
-        props.setUser({ name, email, picture, id: response.data});
+        props.setUser({ name, email, picture, id });
         navigate('/app')
       }
     } catch (e: unknown) {
@@ -52,12 +51,13 @@ const Login = (props: any) => {
 
   return (
     <div className="login-container">
+      <h1>Hack Hour Social</h1>
       {
         loginFailed && 
         <Alert message="Could not sign you in. Please try again." />
       }
       <p>Sign in</p>
-      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID}>
+      <GoogleOAuthProvider clientId={process.env.VITE_GOOGLE_OAUTH_CLIENT_ID}>
         <GoogleLogin
           onSuccess={loginSuccess}
           onError={() => setLoginFailed(true)}

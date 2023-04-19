@@ -2,8 +2,9 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-// import Login from '../src/components/login';
+//import Login from '../src/components/login';
 import Alert from '../src/components/Alert';
+import { BrowserRouter } from 'react-router-dom';
 
 describe('Unit testing login components', () => {
   describe('Alert Bar Text', () => {
@@ -24,7 +25,11 @@ describe('Unit testing login components', () => {
   // describe('Login Failure', () => {
   //   let login;
   //   beforeAll(() => {
-  //     login = render(<Login/>);
+  //     login = render(
+  //     <BrowserRouter>
+  //       <Login/>
+  //     </BrowserRouter>
+  //     );
   //     login.setState({loginFailed: true});
   //   })
   //   test('Failed login renders error bar', () => {
@@ -32,4 +37,5 @@ describe('Unit testing login components', () => {
   //     expect(login.getByText('Error!').nextSibling).toHaveTextContent('Could not sign you in. Please try again.');
   //   })
   // })
-})
+});
+

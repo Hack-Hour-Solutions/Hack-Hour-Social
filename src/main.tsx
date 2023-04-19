@@ -1,15 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './components/App'
-import Login from './components/login'
-import './stylesheets/index.css'
 import { BrowserRouter } from "react-router-dom";
+import App from './components/App'
+import './stylesheets/index.css'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
-      <Login />
       <App />
     </BrowserRouter>
   </React.StrictMode>,
-)
+);
