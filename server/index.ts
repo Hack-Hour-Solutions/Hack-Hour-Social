@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { postController } from './controllers/postController.js';
 import { userController } from './controllers/userController.js';
+import { leetcodeController } from './controllers/leetcodeController.js';
 
 dotenv.config();
 
@@ -24,13 +25,19 @@ app.get(
 app.use(
   '/api/login',
   userController.authenticateToken,
-  userController.getUserData, // get GOOGLE user data: res.locals.user
+  //userController.getUserID, // get GOOGLE user data: res.locals.user
   // getUserID: middleware
   // upsert using email: (if not present add to db)
   // attach id to res.locals.user.id
   // express-session -> makes SSID cookie on req.session
   (req: Request, res: Response) => res.status(200).json(res.locals.user)
 );
+
+app.get(
+  '/api/problem',
+  leetcodeController.getProblemOfTheDay,
+  (req: Request, res: Response) => res.status(200).json(res.locals.dailyProblem)
+)
 
 // req.session.destroy to get rid of the session when they log out
 

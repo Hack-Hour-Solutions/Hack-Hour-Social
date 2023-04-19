@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { createErr } from '../utils';
+import { createErr } from '../utils.js';
 import axios from 'axios';
 
 export const leetcodeController = {
@@ -37,12 +37,12 @@ export const leetcodeController = {
       }`;
 
     try {
-      console.log(`Fetching daily coding challenge from LeetCode API.`);
+      //console.log(`Fetching daily coding challenge from LeetCode API.`);
       const { data } = await axios.post(LEETCODE_API_ENDPOINT, {
         query: DAILY_CODING_CHALLENGE_QUERY,
       });
-
-      const { link, question } = data.activeDailyCodingChallengeQuestion;
+      
+      const { link, question } = data.data.activeDailyCodingChallengeQuestion;
       const { title, difficulty } = question;
 
       res.locals.dailyProblem = { title, difficulty, link };
