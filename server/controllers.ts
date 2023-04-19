@@ -76,3 +76,13 @@ export const leetcodeController = {
     }
   },
 };
+
+export const userController = {
+  getUserData: (req: Request, res: Response, next: NextFunction) => {
+    if (!req.get("Authorization"))
+      return res
+        .status(403)
+        .json({ error: "Missing JWT token from the 'Authorization' header" });
+    return next();
+  },
+};
