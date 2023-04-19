@@ -28,18 +28,14 @@ const Login = (props: any) => {
   const [loginFailed, setLoginFailed] = useState<boolean>(false);
 
   const loginSuccess = async (response: any) => {
-    // console.log('response from success is: ', response);
-    // // Decode JWT sent from google oauth api
-    // const userDetails: decodedJWT = jwt_decode(response.credential);
-    // console.log('decoded JWT is: ', userDetails);
-    // // destructure desired user info
-    // const { name, email, picture } = userDetails;
     try {
       // TODO - Adjust for correct backend communication
-      const loginResponse = await axios.post('api/login', {
-        headers: {"Authorization" : `Bearer ${response.credential}`}
+      console.log('JWT is: ', response.credential);
+      const loginResponse = await axios.post('api/login', {}, {
+        headers: {"Authorization": `Bearer ${response.credential}`}
       })
       const { name, email, picture, id } = loginResponse.data;
+      console.log('response from login is:', loginResponse.data);
       if (response.status === 200){
         props.setUser({ name, email, picture, id });
         navigate('/app')

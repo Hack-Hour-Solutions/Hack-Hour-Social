@@ -5,7 +5,11 @@ const Submit = (props) => {
   const [submitText, setSubmitText] = useState('');
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const submission = {
+      submitText,
+      
+    }
+    await axios.post('/api/solution', submission)
   }
 
   return (
