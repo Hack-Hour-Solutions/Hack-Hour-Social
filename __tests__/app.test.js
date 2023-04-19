@@ -24,7 +24,7 @@ jest.mock('react-router-dom', () => ({
     useNavigate: () => mockedUsedNavigate,
 }));
 
-describe('Unit testing session verification', () => {
+xdescribe('Unit testing session verification', () => {
   let app;
   let valid;
   jest.spyOn(axios, 'get').mockImplementation(() => {

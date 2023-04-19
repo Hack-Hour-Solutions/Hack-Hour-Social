@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { createErr } from '../utils.js';
 import jwt from 'jsonwebtoken';
+import { User } from '../models.js';
 
 export const userController = {
   authenticateToken: (req: Request, res: Response, next: NextFunction) => {
@@ -31,17 +32,42 @@ export const userController = {
     );
   },
 
-  getUserData: (req: Request, res: Response, next: NextFunction) => {
-    try {
-      return next();
-    } catch (err:any) {
-      return next(
-        createErr({
-          method: 'getUserData',
-          type: 'getUserData error',
-          err,
-        })
-      );
+
+  getUserID: (req: Request, res: Response, next: NextFunction) => {
+    
+    if (!(res.locals.user && 
+      res.locals.user.name && 
+      res.locals.email && 
+      res.locals.picture)) {
+        return next(
+          createErr({
+            method: 'getUserData',
+            type: 'Missing data',
+            err: 'User name, email, or picture was not passed to getUserID'
+          })
+        );
+      }
+    
+    const newUser = {
+      name: res.locals.user.name,
+      email: res.locals.user.email,
+      picture: res.locals.user.picture
     }
+
+    User.findOneAndUpdate({email: newUser.email}, newUser, {upsert: true})
+      .then(response => {
+        console.log('USER CREATED/UPDATED', response)
+        res.locals.user = response;
+      })
+      .catch((err: any) => {
+        return next(
+          createErr({
+            method: 'getUserData',
+            type: 'getUserData error',
+            err,
+          })
+        );
+      })
   },
+
 };

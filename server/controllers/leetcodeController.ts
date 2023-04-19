@@ -37,7 +37,7 @@ export const leetcodeController = {
       }`;
 
     try {
-      console.log(`Fetching daily coding challenge from LeetCode API.`);
+      //console.log(`Fetching daily coding challenge from LeetCode API.`);
       const { data } = await axios.post(LEETCODE_API_ENDPOINT, {
         query: DAILY_CODING_CHALLENGE_QUERY,
       });

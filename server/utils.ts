@@ -1,7 +1,7 @@
 interface createErr {
   method: string;
   type: string;
-  err: Error;
+  err: any;
   status?: number;
 }
 
