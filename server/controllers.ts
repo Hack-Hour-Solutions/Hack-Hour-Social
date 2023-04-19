@@ -1,23 +1,32 @@
 import { Request, Response, NextFunction, RequestHandler } from 'express';
-import { Post, User, Comment } from './models'
+import { Post, User, Comment } from './models.js'
 import axios from "axios";
 
 type controllerType = {
   getSolutions: RequestHandler;
-
 }
 
-const controller: controllerType = {
+export const dbController: controllerType = {
 
   getSolutions: function(req: Request, res: Response, next: NextFunction) {
-    const today = new Date();
-    console.log(new Date());
-   // Post.find()
+    const todayMidnight = new Date().setHours(0, 0, 0, 0);
+    // REWORK TO BE TO PST TIME INSTEAD OF UTC
+    Post.find({date: {$gte: todayMidnight}})
+      .then(response => {
+        console.log('POST.find RESPONSE', response)
+        res.locals.solutions = response;
+        return next();
+      })
+      .catch(err => console.log(err))
+  }
+}
+  
+// ERROR TYPE CAUSES ERROR WITH CREATE ERROR, SET TO ANY
 
 interface createErr {
   method: string;
   type: string;
-  err: Error;
+  err: any;
   status?: number;
 }
 
@@ -83,18 +92,9 @@ export const leetcodeController = {
         createErr({
           method: "getProblemOfTheDay",
           type: "leetcode problem error",
-          err,
+          err: err
         })
       );
     }
   },
 };
-    
-
-  }
-
-
-
-}; 
-
-export { controller };

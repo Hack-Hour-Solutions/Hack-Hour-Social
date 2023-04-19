@@ -8,7 +8,7 @@
     "dev-server": "nodemon server/index.ts",
     "start": "vite & nodemon server/index.ts",
     "preview": "vite preview",
-    "test": "jest"
+    "test": "jest & ENV=TEST"
   },
   "dependencies": {
     "@react-oauth/google": "^0.10.0",

@@ -1,14 +1,18 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+dotenv.config();
 
-let db: string;
-process.env.ENV === 'TEST' ? db = 'hack-hour-solutions-test' : 'hack-hour-solutions'
+let db: string = process.env.ENV === 'TEST' ? 
+  'hack-hour-solutions-test' : 
+  'hack-hour-solutions';
 
-mongoose.connect(process.env.MONGO_URI, {
+if (!process.env.MONGO_URI) throw new Error('mongoURI not defined');
+
+mongoose.connect('mongodb+srv://shendo87:UIOqlCfrXxZJYeJL@cluster0.kzkmgom.mongodb.net/?retryWrites=true&w=majority', {
   dbName: db
 })
   .then(() => console.log('Connected to DB'))
   .catch(err => console.log(err))
-
 
 const postSchema = new mongoose.Schema({
   user_id: {
@@ -16,7 +20,7 @@ const postSchema = new mongoose.Schema({
     ref: 'user'
   },
   solution: String,
-  createdAt: Date,
+  date: Date,
   comments: [
     {type: mongoose.Schema.Types.ObjectId, ref: 'comments'}
   ]
@@ -38,7 +42,7 @@ const commentSchema = new mongoose.Schema({
     ref: 'user'
   },
   text: String,
-  createdAt: Date
+  date: Date
 })
 
 const Comment = mongoose.model('comments', commentSchema);
