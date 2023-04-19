@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, RequestHandler } from 'express';
 import { Post, User, Comment } from '../models.js'
-import { createErr } from '../controllers.js';
+import { createErr } from '../utils.js';
 
 export const postController = {
 
