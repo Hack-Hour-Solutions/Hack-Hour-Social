@@ -30,8 +30,10 @@ export const userController = {
       }
     );
   },
+
   getUserData: (req: Request, res: Response, next: NextFunction) => {
     try {
+      return next();
     } catch (err) {
       return next(
         createErr({
