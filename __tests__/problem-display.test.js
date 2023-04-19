@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 
 import ProblemDisplay from '../src/components/ProblemDisplay';
 
-describe('Title', () => {
+describe('ProblemDisplay', () => {
   const props = {
     title: 'Two Sum',
     url: 'https://leetcode.com/problems/two-sum/',
