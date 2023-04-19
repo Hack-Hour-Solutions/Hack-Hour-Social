@@ -45,12 +45,10 @@ export const userController = {
           })
         );
       }
-    );
+    }
   },
-
-
-  getUserID: (req: Request, res: Response, next: NextFunction) => {
     
+  getUserID: (req: Request, res: Response, next: NextFunction) => {
     if (!(res.locals.user && 
       res.locals.user.name && 
       res.locals.email && 
@@ -85,5 +83,5 @@ export const userController = {
         );
       })
   },
+}
 
-};

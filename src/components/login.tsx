@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FcGoogle } from 'react-icons/fc';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
-import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import Alert from './Alert';
 
