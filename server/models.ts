@@ -8,7 +8,7 @@ let db: string = process.env.ENV === 'TEST' ?
 
 if (!process.env.MONGO_URI) throw new Error('mongoURI not defined');
 
-mongoose.connect('mongodb+srv://shendo87:UIOqlCfrXxZJYeJL@cluster0.kzkmgom.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect(process.env.MONGO_URI, {
   dbName: db
 })
   .then(() => console.log('Connected to DB'))

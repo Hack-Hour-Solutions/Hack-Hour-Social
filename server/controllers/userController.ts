@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { createErr } from '../utils';
+import { createErr } from '../utils.js';
 import jwt from 'jsonwebtoken';
 
 export const userController = {
