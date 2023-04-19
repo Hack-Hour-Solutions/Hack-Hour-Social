@@ -1,5 +1,6 @@
-import { Request, Response, NextFunction } from "express";
-import axios from "axios";
+import { Request, Response, NextFunction } from 'express';
+import axios from 'axios';
+import jwt from 'jsonwebtoken';
 
 interface createErr {
   method: string;
@@ -10,7 +11,7 @@ interface createErr {
 
 export const createErr = ({ method, type, err, status }: createErr) => ({
   log: `${method}, ${type}: ${
-    typeof err === "object" ? JSON.stringify(err, ["name", "message"], 2) : err
+    typeof err === 'object' ? JSON.stringify(err, ['name', 'message'], 2) : err
   }`,
   status: status ? status : 500,
   message: {
@@ -24,7 +25,7 @@ export const leetcodeController = {
     res: Response,
     next: NextFunction
   ) => {
-    const LEETCODE_API_ENDPOINT = "https://leetcode.com/graphql";
+    const LEETCODE_API_ENDPOINT = 'https://leetcode.com/graphql';
     const DAILY_CODING_CHALLENGE_QUERY = `
       query questionOfToday {
       	activeDailyCodingChallengeQuestion {
@@ -65,11 +66,11 @@ export const leetcodeController = {
       // console.log(res.locals.dailyProblem);
       return next();
     } catch (err) {
-      console.log("inside error");
+      console.log('inside error');
       return next(
         createErr({
-          method: "getProblemOfTheDay",
-          type: "leetcode problem error",
+          method: 'getProblemOfTheDay',
+          type: 'leetcode problem error',
           err,
         })
       );
@@ -78,11 +79,31 @@ export const leetcodeController = {
 };
 
 export const userController = {
-  getUserData: (req: Request, res: Response, next: NextFunction) => {
-    if (!req.get("Authorization"))
+  authenticateToken: (req: Request, res: Response, next: NextFunction) => {
+    const authHeader = req.get('authorization');
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (!token)
       return res
-        .status(403)
+        .status(401)
         .json({ error: "Missing JWT token from the 'Authorization' header" });
-    return next();
+
+    jwt.verify(
+      token,
+      process.env.TOKEN_SECRET as string,
+      (err: any, user: any) => {
+        if (err)
+          return next(
+            createErr({
+              method: 'authenticateToken',
+              type: 'authenticateToken error',
+              err,
+            })
+          );
+        console.log(user);
+        res.locals.user = user;
+        return next();
+      }
+    );
   },
 };
